@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>الطلبات</title>
+    <meta name="description" content="عرض الطلبات السابقة للعميل.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet"/>
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <!-- Header -->
+    <header class="bg-blue-600 shadow-md">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center">
+                <img alt="شعار دائري للمتجر" class="w-10 h-10 rounded-full mr-2" src="https://placehold.co/50x50"/>
+                <div class="text-2xl font-bold text-white">اسم المتجر</div>
+            </div>
+        </div>
+        <!-- Navigation Menu -->
+        <nav class="bg-blue-900 text-white mt-2">
+            <div class="container mx-auto px-4 py-2">
+                <div class="flex space-x-6"> <!-- زيادة المسافة بين الأزرار -->
+                    <a class="hover:text-gray-300 py-2" href="3bot.html">الرئيسية</a>
+                    <a class="hover:text-gray-300 py-2" href="orders.html">الطلبات</a>
+                    <button id="supportButton" class="hover:text-gray-300 py-2">الدعم</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Support Modal -->
+    <div id="supportModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-white rounded-lg p-6 w-11/12 md:w-1/3">
+            <h2 class="text-xl font-bold mb-4">اختر طريقة الدعم</h2>
+            <div class="flex space-x-4">
+                <a href="tel:0792185644" class="bg-blue-600 text-white py-2 px-4 rounded-lg shadow hover:bg-blue-700 transition duration-200">اتصل بنا</a>
+                <a href="mailto:sh0p0ussama31@gmail.com" class="bg-green-600 text-white py-2 px-4 rounded-lg shadow hover:bg-green-700 transition duration-200">أرسل رسالة</a>
+            </div>
+            <button id="closeModal" class="mt-4 text-red-500">إغلاق</button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <h2 class="text-xl font-bold mb-4">الطلبات السابقة</h2>
+        <div id="ordersList" class="overflow-x-auto">
+            <!-- سيتم عرض الطلبات هنا -->
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-blue-900 text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <h3 class="text-xl font-bold mb-2">روابط التواصل الاجتماعي</h3>
+                    <div class="flex space-x-4">
+                        <a class="hover:text-gray-300" href="https://www.facebook.com/profile.php?id=61572407734139">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a class="hover:text-gray-300" href="https://www.instagram.com/bonaffaire2025?igsh=MTZ6cm9ja2F1Y3Jtcg==">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a class="hover:text-gray-300" href="https://www.tiktok.com/@b0naffaire?_t=ZM-8tWMJWPHNBu&_r=1">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-2">حقوق النشر وسياسة الاستخدام</h3>
+                    <p class="text-gray-300">© 2023 جميع الحقوق محفوظة.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // جلب الطلبات من Local Storage
+        document.addEventListener('DOMContentLoaded', function() {
+            const ordersList = document.getElementById('ordersList');
+            const orders = JSON.parse(localStorage.getItem('orders')) || [];
+
+            if (orders.length === 0) {
+                ordersList.innerHTML = '<p>لا توجد طلبات سابقة.</p>';
+            } else {
+                const table = document.createElement('table');
+                table.className = 'min-w-full bg-white border border-gray-300';
+                table.innerHTML = `
+                    <thead>
+                        <tr>
+                            <th class="py-2 px-4 border-b">رقم الطلب</th>
+                            <th class="py-2 px-4 border-b">اسم المنتج</th>
+                            <th class="py-2 px-4 border-b">السعر</th>
+                            <th class="py-2 px-4 border-b">الكمية</th>
+                            <th class="py-2 px-4 border-b">تاريخ الطلب</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${orders.map((order, index) => `
+                            <tr>
+                                <td class="py-2 px-4 border-b">${index + 1}</td>
+                                <td class="py-2 px-4 border-b">${order.productName}</td>
+                                <td class="py-2 px-4 border-b">${order.productPrice}</td>
+                                <td class="py-2 px-4 border-b">${order.quantity}</td>
+                                <td class="py-2 px-4 border-b">${order.date}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                `;
+                ordersList.appendChild(table);
+            }
+        });
+
+        // فتح وإغلاق نافذة الدعم
+        const supportButton = document.getElementById('supportButton');
+        const supportModal = document.getElementById('supportModal');
+        const closeModal = document.getElementById('closeModal');
+
+        supportButton.addEventListener('click', () => {
+            supportModal.classList.remove('hidden');
+        });
+
+        closeModal.addEventListener('click', () => {
+            supportModal.classList.add('hidden');
+        });
+    </script>
+</body>
+</html>

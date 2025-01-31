@@ -1,0 +1,427 @@
+<html lang="ar">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>متجر إلكتروني</title>
+    <meta name="description" content="متجر إلكتروني يقدم مجموعة متنوعة من المنتجات بأسعار تنافسية. تسوق الآن!">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet"/>
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+        }
+        .three-d-container {
+            perspective: 1000px;
+        }
+        .three-d-card {
+            transform-style: preserve-3d;
+            transition: transform 0.5s;
+        }
+        .three-d-card:hover {
+            transform: rotateY(20deg) rotateX(10deg) scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        .carousel {
+            position: relative;
+            overflow: hidden;
+        }
+        .carousel-inner {
+            display: flex;
+            transition: transform 1s ease;
+        }
+        .carousel-inner img {
+            min-width: 100%;
+            transition: opacity 1s ease;
+        }
+        .dots {
+            text-align: center;
+            margin-top: 10px;
+        }
+        .dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            margin: 0 5px;
+            border-radius: 50%;
+            background-color: #bbb;
+            cursor: pointer;
+        }
+        .active-dot {
+            background-color: #4caf50;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 50;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        .modal-content {
+            background-color: #FFFFFF;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 90%;
+            max-width: 500px;
+        }
+        .notification {
+            display: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #4caf50;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            z-index: 100;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <!-- Header -->
+    <header class="bg-blue-600 shadow-md">
+        <div class="container mx-auto px-4 py-10 flex justify-between items-center">
+            <div class="flex items-center">
+                <img alt="شعار دائري للمتجر" class="w-10 h-10 rounded-full mr-2" src="https://placehold.co/50x50"/>
+                <div class="text-2xl font-bold text-white">اسم المتجر</div>
+            </div>
+        </div>
+        <!-- Navigation Menu -->
+        <nav class="bg-blue-900 text-white mt-4">
+            <div class="container mx-auto px-4 py-2 flex justify-between">
+                <a class="hover:text-gray-300" href="#">الرئيسية</a>
+                <a class="hover:text-gray-300 scroll-to" href="#products">المنتجات</a>
+                <a class="hover:text-gray-300" href="orders.html">الطلبات</a>
+                <button id="supportButton" class="hover:text-gray-300" >الدعم</button>
+            </div>
+        </nav>
+    </header>
+        <!-- Support Modal -->
+    <div id="supportModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-white rounded-lg p-6 w-11/12 md:w-1/3">
+            <h2 class="text-xl font-bold mb-4">اختر طريقة الدعم</h2>
+            <div class="flex space-x-4">
+                <a href="tel:0792185644" class="bg-blue-600 text-white py-2 px-4 rounded-lg shadow hover:bg-blue-700 transition duration-200">اتصل بنا</a>
+                <a href="mailto:sh0p0ussama31@gmail.com" class="bg-green-600 text-white py-2 px-4 rounded-lg shadow hover:bg-green-700 transition duration-200">أرسل رسالة</a>
+            </div>
+            <button id="closeModal" class="mt-4 text-red-500">إغلاق</button>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="bg-blue-300 py-8">
+        <div class="container mx-auto px-4 text-center">
+            <img alt="شعار المتجر" class="mx-auto mb-4" src="https://placehold.co/150x150"/>
+            <p class="text-lg text-white mb-4">وصف مختصر للمتجر يوضح ما يقدمه من منتجات وخدمات.</p>
+            <a class="px-6 py-3 bg-white text-blue-900 font-bold rounded-md scroll-to" href="#products">تسوق الآن</a>
+        </div>
+    </section>
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- 3D Product Display -->
+        <section class="mb-8" id="products">
+            <h2 class="text-3xl font-bold text-blue-900 mb-4">عرض المنتجات</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 three-d-container">
+                <!-- Product 1 -->
+                <div class="bg-white shadow-md rounded-md p-4 three-d-card">
+                    <div class="carousel">
+                        <div class="carousel-inner">
+                            <img alt="صورة ثلاثية الأبعاد لمنتج إلكتروني - صورة 1" src="https://placehold.co/300x300"/>
+                            <img alt="صورة ثلاثية الأبعاد لمنتج إلكتروني - صورة 2" src="https://placehold.co/300x300"/>
+                            <img alt="صورة ثلاثية الأبعاد لمنتج إلكتروني - صورة 3" src="https://placehold.co/300x300"/>
+                        </div>
+                        <div class="dots">
+                            <span class="dot active-dot"></span>
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-blue-900 mb-2 product-name">اسم المنتج 1</h3>
+                    <p class="text-gray-600 mb-4 product-description">وصف مختصر للمنتج 1.</p>
+                    <p class="text-gray-500 line-through mb-1">السعر الأصلي: $150</p>
+                    <p class="text-red-500 font-bold mb-4 product-price">السعر: $100</p>
+                    <p class="text-green-500 font-bold mb-4">كمية محدودة</p>
+                    <button class="px-4 py-2 bg-blue-900 text-white rounded-md open-modal">اشتري الآن</button>
+                </div>
+                <!-- Product 2 -->
+                <div class="bg-white shadow-md rounded-md p-4 three-d-card">
+                    <div class="carousel">
+                        <div class="carousel-inner">
+                            <img alt="صورة ثلاثية الأبعاد لمنتج إلكتروني - صورة 1" src="https://placehold.co/300x300"/>
+                            <img alt="صورة ثلاثية الأبعاد لمنتج إلكتروني - صورة 2" src="https://placehold.co/300x300"/>
+                            <img alt="صورة ثلاثية الأبعاد لمنتج إلكتروني - صورة 3" src="https://placehold.co/300x300"/>
+                        </div>
+                        <div class="dots">
+                            <span class="dot active-dot"></span>
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-blue-900 mb-2 product-name">اسم المنتج 2</h3>
+                    <p class="text-gray-600 mb-4 product-description">وصف مختصر للمنتج 2.</p>
+                    <p class="text-gray-500 line-through mb-1">السعر الأصلي: $250</p>
+                    <p class="text-red-500 font-bold mb-4 product-price">السعر: $200</p>
+                    <p class="text-green-500 font-bold mb-4">كمية محدودة</p>
+                    <button class="px-4 py-2 bg-blue-900 text-white rounded-md open-modal">اشتري الآن</button>
+                </div>
+                <!-- Product 3 -->
+                <div class="bg-white shadow-md rounded-md p-4 three-d-card">
+                    <div class="carousel">
+                        <div class="carousel-inner">
+                            <img alt="صورة ثلاثية الأبعاد لمنتج إلكتروني - صورة 1" src="https://placehold.co/300x300"/>
+                            <img alt="صورة ثلاثية الأبعاد لمنتج إلكتروني - صورة 2" src="https://placehold.co/300x300"/>
+                            <img alt="صورة ثلاثية الأبعاد لمنتج إلكتروني - صورة 3" src="https://placehold.co/300x300"/>
+                        </div>
+                        <div class="dots">
+                            <span class="dot active-dot"></span>
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-blue-900 mb-2 product-name">اسم المنتج 3</h3>
+                    <p class="text-gray-600 mb-4 product-description">وصف مختصر للمنتج 3.</p>
+                    <p class="text-gray-500 line-through mb-1">السعر الأصلي: $350</p>
+                    <p class="text-red-500 font-bold mb-4 product-price">السعر: $300</p>
+                    <p class="text-green-500 font-bold mb-4">كمية محدودة</p>
+                    <button class="px-4 py-2 bg-blue-900 text-white rounded-md open-modal">اشتري الآن</button>
+                </div>
+        
+            </div>
+        </section>
+    </main>
+    <!-- Footer -->
+    <footer class="bg-blue-900 text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <h3 class="text-xl font-bold mb-2">روابط التواصل الاجتماعي</h3>
+                    <div class="flex space-x-4">
+                        <a class="hover:text-gray-300" href="https://www.facebook.com/profile.php?id=61572407734139">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a class="hover:text-gray-300" href="https://www.instagram.com/bonaffaire2025?igsh=MTZ6cm9ja2F1Y3Jtcg==">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a class="hover:text-gray-300" href="https://www.tiktok.com/@b0naffaire?_t=ZM-8tWMJWPHNBu&_r=1">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-2">حقوق النشر وسياسة الاستخدام</h3>
+                    <p class="text-gray-300">© 2023 جميع الحقوق محفوظة.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Modal -->
+    <div class="modal" id="orderModal">
+        <div class="modal-content">
+            <span class="close">×</span>
+            <h2 class="text-2xl font-bold mb-4">تأكيد الطلب</h2>
+            <form action="https://formspree.io/f/xovjdwgg" id="orderForm" method="POST">
+                <input id="productName" name="productName" type="hidden"/>
+                <input id="productDescription" name="productDescription" type="hidden"/>
+                <input id="productPrice" name="productPrice" type="hidden"/>
+                <div class="mb-4">
+                    <label class="block text-gray-700 mb-2" for="firstName">الاسم</label>
+                    <input class="w-full px-3 py-2 border rounded-md" id="firstName" name="firstName" required type="text"/>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 mb-2" for="lastName">اللقب</label>
+                    <input class="w-full px-3 py-2 border rounded-md" id="lastName" name="lastName" required type="text"/>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 mb-2" for="phone">رقم الهاتف</label>
+                    <input class="w-full px-3 py-2 border rounded-md" id="phone" name="phone" required type="tel"/>
+                    <p class="text-red-500 text-sm mt-1 hidden" id="phoneError">يرجى إدخال رقم صحيح</p>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 mb-2" for="quantity">الكمية</label>
+                    <input class="w-full px-3 py-2 border rounded-md" id="quantity" max="5" name="quantity" required type="number"/>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 mb-2" for="state">الولاية</label>
+                    <select class="w-full px-3 py-2 border rounded-md" id="state" name="state" required>
+                        <option value="">اختر الولاية</option>
+                        <option value="وهران">وهران</option>
+                        <option value="قسنطينة">قسنطينة</option>
+                        <option value="الجزائر">الجزائر</option>
+                        <option value="عنابة">عنابة</option>
+                        <option value="بليدة">بليدة</option>
+                        <option value="سطيف">سطيف</option>
+                        <option value="باتنة">باتنة</option>
+                        <option value="بجاية">بجاية</option>
+                        <option value="تلمسان">تلمسان</option>
+                        <option value="تيزي وزو">تيزي وزو</option>
+                    </select>
+                    <p class="text-red-500 text-sm mt-1 hidden" id="stateError">يرجى اختيار الولاية</p>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 mb-2" for="note">ملاحظة (اختياري)</label>
+                    <textarea class="w-full px-3 py-2 border rounded-md" id="note" name="note"></textarea>
+                </div>
+                <button class="px-4 py-2 bg-blue-900 text-white rounded-md" type="submit">تأكيد الطلب</button>
+            </form>
+        </div>
+    </div>
+    <div class="notification" id="notification">
+        تم استلام طلبك وسيتم التواصل معك قريبًا.
+        <button class="close-notification">إغلاق</button>
+    </div>
+    <script>
+    
+        // فتح وإغلاق نافذة الدعم
+const supportButton = document.getElementById('supportButton');
+const supportModal = document.getElementById('supportModal');
+const closeModal = document.getElementById('closeModal');
+
+supportButton.addEventListener('click', () => {
+    supportModal.classList.remove('hidden'); // إزالة الكلاس "hidden" لجعل النافذة مرئية
+});
+
+closeModal.addEventListener('click', () => {
+    supportModal.classList.add('hidden'); // إضافة الكلاس "hidden" لإخفاء النافذة
+});
+                document.addEventListener('DOMContentLoaded', function() {
+            const carousels = document.querySelectorAll('.carousel-inner');
+            carousels.forEach(carousel => {
+                let index = 0;
+                const dots = carousel.nextElementSibling.querySelectorAll('.dot');
+                setInterval(() => {
+                    index = (index + 1) % carousel.children.length;
+                    carousel.style.transform = `translateX(-${index * 100}%)`;
+                    updateDots(dots, index);
+                }, 3000);
+            });
+            
+
+            function updateDots(dots, activeIndex) {
+                dots.forEach((dot, index) => {
+                    dot.classList.toggle('active-dot', index === activeIndex);
+                });
+            }
+
+            const modal = document.getElementById("orderModal");
+            const openModalButtons = document.querySelectorAll(".open-modal");
+            const closeModalButton = document.querySelector(".close");
+
+            openModalButtons.forEach(button => {
+                button.addEventListener("click", (event) => {
+                    const productCard = event.target.closest('.three-d-card');
+                    const productName = productCard.querySelector('.product-name').textContent;
+                    const productDescription = productCard.querySelector('.product-description').textContent;
+                    const productPrice = productCard.querySelector('.product-price').textContent;
+
+                    document.getElementById('productName').value = productName;
+                    document.getElementById('productDescription').value = productDescription;
+                    document.getElementById('productPrice').value = productPrice;
+
+                    modal.style.display = "block";
+                });
+            });
+
+            closeModalButton.addEventListener("click", () => {
+                modal.style.display = "none";
+            });
+
+            window.addEventListener("click", (event) => {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            });
+
+            const scrollToElements = document.querySelectorAll('.scroll-to');
+            scrollToElements.forEach(element => {
+                element.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    window.scrollTo({
+                        top: targetElement.offsetTop,
+                        behavior: 'smooth'
+                    });
+                });
+            });
+
+            const orderForm = document.getElementById('orderForm');
+            const phoneInput = document.getElementById('phone');
+            const phoneError = document.getElementById('phoneError');
+            const stateInput = document.getElementById('state');
+            const stateError = document.getElementById('stateError');
+            const notification = document.getElementById('notification');
+            const closeNotificationButton = document.querySelector('.close-notification');
+
+            orderForm.addEventListener('submit', function(event) {
+                const phoneValue = phoneInput.value;
+                const phonePattern = /^(05|06|07)\d{8}$/;
+                const stateValue = stateInput.value;
+
+                let valid = true;
+
+                if (!phonePattern.test(phoneValue)) {
+                    event.preventDefault();
+                    phoneError.classList.remove('hidden');
+                    valid = false;
+                } else {
+                    phoneError.classList.add('hidden');
+                }
+
+                if (stateValue === "") {
+                    event.preventDefault();
+                    stateError.classList.remove('hidden');
+                    valid = false;
+                } else {
+                    stateError.classList.add('hidden');
+                }
+
+                if (valid) {
+                    event.preventDefault();
+                    const submitButton = orderForm.querySelector('button[type="submit"]');
+                    submitButton.disabled = true; // Disable button to prevent duplicate submissions
+                    fetch(orderForm.action, {
+                        method: orderForm.method,
+                        body: new FormData(orderForm),
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    }).then(response => {
+                        if (response.ok) {
+                            notification.style.display = 'block';
+                            setTimeout(() => {
+                                notification.style.display = 'none';
+                                modal.style.display = 'none';
+                                window.scrollTo({
+                                    top: document.getElementById('products').offsetTop,
+                                    behavior: 'smooth'
+                                });
+                            }, 3000);
+                        } else {
+                            response.json().then(data => {
+                                if (Object.hasOwn(data, 'errors')) {
+                                    alert(data["errors"].map(error => error["message"]).join(", "));
+                                } else {
+                                    alert("Oops! حدث خطأ ما عند إرسال النموذج.");
+                                }
+                            });
+                        }
+                    }).catch(error => {
+                        alert("Oops! حدث خطأ ما عند إرسال النموذج.");
+                    }).finally(() => {
+                        submitButton.disabled = false; // Re-enable button after processing
+                    });
+                }
+            });
+
+            closeNotificationButton.addEventListener('click', () => {
+                notification.style.display = 'none';
+            });
+        });
+    </script>
+</body>
+</html>
